@@ -34,7 +34,7 @@ export const signin= async (req:Request,res:Response)=>{
             }) 
         }
         const userId= user.id
-        const token=jwt.sign({userId},JWT_SECRET, {expiresIn:"1h"})
+        const token=jwt.sign({userId:userId},JWT_SECRET, {expiresIn:"1h"})
         return res.status(200).json({
             success:true,
             msg:"user signed in",

@@ -40,7 +40,7 @@ export const signup = async (req: Request, res: Response) => {
     return res.status(403).json({
         success:false,
         code: "USERNAME_ALREADY_EXISTS",
-        msg:"An account with this email already exists"
+        msg:"This username is already taken"
     })
   }
    const hashedPass= await bcrypt.hash(password, 12)
