@@ -31,6 +31,18 @@ export const signup = async (req: Request, res: Response) => {
       },
     });
   }
+  const sameUsername= await prisma.user.findUnique({
+    where:{
+        username
+    }
+  })
+  if(sameUsername){
+    return res.status(403).json({
+        success:false,
+        code: "USERNAME_ALREADY_EXISTS",
+        msg:"An account with this email already exists"
+    })
+  }
    const hashedPass= await bcrypt.hash(password, 12)
     await prisma.user.create({
         data:{
