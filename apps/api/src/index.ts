@@ -1,8 +1,9 @@
-import dotenv from "dotenv";
+import express from 'express'
+import "dotenv/config"
+const app= express()
+const port=process.env.PORT
+app.use(express.json())
 
-// Load env FIRST
-dotenv.config({ path: "../../.env" });
-
-import { JWT_SECRET } from "@repo/backend-common";
-
-console.log("JWT_SECRET:", JWT_SECRET);
+app.listen(port, ()=>{
+    console.log(`server is running on ${port}`);
+})
