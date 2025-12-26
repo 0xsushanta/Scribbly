@@ -8,9 +8,10 @@
   },
   "devDependencies": {
     "@repo/backend-common": "workspace:*",
+    "@repo/common": "workspace:*",
     "@repo/database": "workspace:*",
-    "@repo/common":"workspace:*",
     "@repo/typescript-config": "workspace:*",
+    "@types/bcrypt": "^6.0.0",
     "@types/express": "^5.0.6",
     "@types/node": "^22.15.3"
   },
@@ -19,6 +20,7 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "bcrypt": "^6.0.0",
     "dotenv": "^17.2.3",
     "express": "^5.2.1",
     "node": "^24.12.0"
