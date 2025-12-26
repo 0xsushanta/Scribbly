@@ -66,6 +66,9 @@ importers:
       bufferutil:
         specifier: ^4.0.1
         version: 4.1.0
+      jsonwebtoken:
+        specifier: ^9.0.3
+        version: 9.0.3
       utf-8-validate:
         specifier: ^5.0.2
         version: 5.0.10
@@ -73,9 +76,15 @@ importers:
         specifier: ^8.18.3
         version: 8.18.3(bufferutil@4.1.0)(utf-8-validate@5.0.10)
     devDependencies:
+      '@repo/backend-common':
+        specifier: workspace:*
+        version: link:../../packages/backend-common
       '@repo/typescript-config':
         specifier: workspace:*
         version: link:../../packages/typescript-config
+      '@types/jsonwebtoken':
+        specifier: ^9.0.10
+        version: 9.0.10
       '@types/ws':
         specifier: ^8.18.1
         version: 8.18.1
