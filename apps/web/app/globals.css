@@ -1,26 +1,59 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* Tailwind v4 design tokens (hook up your custom theme) */
+@theme {
+  /* Fonts */
+  --font-sans: "Inter", system-ui, -apple-system, BlinkMacSystemFont,
+    "Segoe UI", sans-serif;
+  --font-hand: "Kalam", cursive;
+
+  /* Colors (match tailwind.config.ts) */
+  --color-paper: #f8fafc; /* Slate 50 */
+  --color-ink: #0f172a; /* Slate 900 */
+
+  --color-brand-50: #fff8f5;
+  --color-brand-100: #FEEAC9; /* Lightest - Peachy cream */
+  --color-brand-200: #ffe0c7;
+  --color-brand-300: #FFCDC9; /* Light pink/coral */
+  --color-brand-400: #ffbeb8;
+  --color-brand-500: #FDACAC; /* Medium pink */
+  --color-brand-600: #fd9595;
+  --color-brand-700: #FD7979; /* Darkest pink/coral */
+  --color-brand-800: #fd5c5c;
+  --color-brand-900: #fd3f3f;
+
+  --color-accent-200: #a5f3fc;
+  --color-accent-400: #22d3ee;
+  --color-accent-500: #06b6d4;
+  --color-accent-600: #0891b2;
+
+  /* Animations */
+  --animate-float: float 6s ease-in-out infinite;
+  --animate-fade-in-up: fadeInUp 0.8s ease-out forwards;
+  --animate-pulse-slow: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
+/* Base styles */
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: #f8fafc; /* paper */
+  color: #0f172a; /* ink */
 }
+
+/* Custom scrollbar with gradient */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(to bottom, #FDACAC, #FD7979);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(to bottom, #FD7979, #FDACAC);
+}
+

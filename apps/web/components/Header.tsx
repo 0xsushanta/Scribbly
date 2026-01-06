@@ -1,0 +1,86 @@
+"use client"
+import React, { useState, useEffect } from 'react';
+import { Menu, X, PenTool } from 'lucide-react';
+import { Button } from './Button';
+
+export const Header: React.FC = () => {
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 20);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const navLinks = [
+    { label: 'Features', href: '#features' },
+    { label: 'Testimonials', href: '#' },
+    { label: 'Blog', href: '#' },
+  ];
+
+  return (
+    <header 
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        isScrolled ? 'bg-white/80 backdrop-blur-lg shadow-sm py-3 border-b border-stone-100' : 'bg-transparent py-5'
+      }`}
+    >
+      <div className="max-w-7xl mx-auto px-4 flex items-center justify-between">
+        <div className="flex items-center gap-2 group cursor-pointer">
+          <div className="w-10 h-10 bg-gradient-to-br from-[#FDACAC] via-[#FD7979] to-[#FDACAC] text-white rounded-xl flex items-center justify-center transform group-hover:rotate-12 transition-transform duration-300 shadow-lg shadow-[#FD7979]/30 group-hover:shadow-xl group-hover:shadow-[#FD7979]/40">
+            <PenTool size={20} strokeWidth={2.5} />
+          </div>
+          <span className="text-2xl font-bold bg-gradient-to-r from-[#FDACAC] to-[#FD7979] bg-clip-text text-transparent font-sans tracking-tight">Scribly</span>
+        </div>
+
+        {/* Desktop Nav */}
+        <nav className="hidden md:flex items-center gap-1 bg-gradient-to-r from-[#FEEAC9]/40 via-white/50 to-[#FFCDC9]/40 p-1.5 rounded-full border border-[#FDACAC]/30 backdrop-blur-sm shadow-md shadow-[#FDACAC]/10">
+          {navLinks.map((link) => (
+            <a 
+              key={link.label} 
+              href={link.href}
+              className="px-5 py-2 rounded-full text-sm font-medium text-stone-600 hover:text-[#FD7979] hover:bg-gradient-to-r hover:from-white hover:via-[#FEEAC9]/30 hover:to-[#FFCDC9]/20 hover:shadow-md hover:shadow-[#FDACAC]/20 transition-all duration-300"
+            >
+              {link.label}
+            </a>
+          ))}
+        </nav>
+
+        <div className="hidden md:flex items-center gap-4">
+          <a href="#" className="text-sm font-semibold text-stone-600 hover:text-brand-600 transition-colors">Log in</a>
+          <Button size="sm">Get Started</Button>
+        </div>
+
+        {/* Mobile Menu Button */}
+        <button 
+          className="md:hidden text-stone-900 p-2 hover:bg-stone-100 rounded-lg transition-colors"
+          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+        >
+          {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+        </button>
+      </div>
+
+      {/* Mobile Nav Overlay */}
+      {isMobileMenuOpen && (
+        <div className="md:hidden absolute top-full left-0 right-0 bg-white border-b border-stone-200 p-4 flex flex-col gap-4 shadow-xl animate-in slide-in-from-top-2">
+          {navLinks.map((link) => (
+            <a 
+              key={link.label} 
+              href={link.href}
+              className="text-lg font-medium text-stone-700 py-3 px-4 rounded-xl hover:bg-stone-50"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              {link.label}
+            </a>
+          ))}
+          <div className="flex flex-col gap-3 mt-4 pt-4 border-t border-stone-100">
+            <Button variant="outline" className="justify-center w-full">Log in</Button>
+            <Button className="justify-center w-full">Sign up free</Button>
+          </div>
+        </div>
+      )}
+    </header>
+  );
+};
