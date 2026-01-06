@@ -29,19 +29,19 @@ export const Header: React.FC = () => {
     >
       <div className="max-w-7xl mx-auto px-4 flex items-center justify-between">
         <div className="flex items-center gap-2 group cursor-pointer">
-          <div className="w-10 h-10 bg-gradient-to-br from-[#FDACAC] via-[#FD7979] to-[#FDACAC] text-white rounded-xl flex items-center justify-center transform group-hover:rotate-12 transition-transform duration-300 shadow-lg shadow-[#FD7979]/30 group-hover:shadow-xl group-hover:shadow-[#FD7979]/40">
+          <div className="w-10 h-10 bg-gradient-to-br from-[#60A5FA] via-[#3B82F6] to-[#60A5FA] text-white rounded-xl flex items-center justify-center transform group-hover:rotate-12 transition-transform duration-300 shadow-lg shadow-[#3B82F6]/30 group-hover:shadow-xl group-hover:shadow-[#3B82F6]/40">
             <PenTool size={20} strokeWidth={2.5} />
           </div>
-          <span className="text-2xl font-bold bg-gradient-to-r from-[#FDACAC] to-[#FD7979] bg-clip-text text-transparent font-sans tracking-tight">Scribly</span>
+          <span className="text-2xl font-bold bg-gradient-to-r from-[#60A5FA] to-[#3B82F6] bg-clip-text text-transparent font-sans tracking-tight">Scribly</span>
         </div>
 
         {/* Desktop Nav */}
-        <nav className="hidden md:flex items-center gap-1 bg-gradient-to-r from-[#FEEAC9]/40 via-white/50 to-[#FFCDC9]/40 p-1.5 rounded-full border border-[#FDACAC]/30 backdrop-blur-sm shadow-md shadow-[#FDACAC]/10">
+        <nav className="hidden md:flex items-center gap-1 bg-gradient-to-r from-[#DBEAFE]/40 via-white/50 to-[#60A5FA]/40 p-1.5 rounded-full border border-[#3B82F6]/30 backdrop-blur-sm shadow-md shadow-[#3B82F6]/10">
           {navLinks.map((link) => (
             <a 
               key={link.label} 
               href={link.href}
-              className="px-5 py-2 rounded-full text-sm font-medium text-stone-600 hover:text-[#FD7979] hover:bg-gradient-to-r hover:from-white hover:via-[#FEEAC9]/30 hover:to-[#FFCDC9]/20 hover:shadow-md hover:shadow-[#FDACAC]/20 transition-all duration-300"
+              className="px-5 py-2 rounded-full text-sm font-medium text-stone-600 hover:text-[#3B82F6] hover:bg-gradient-to-r hover:from-white hover:via-[#DBEAFE]/30 hover:to-[#60A5FA]/20 hover:shadow-md hover:shadow-[#3B82F6]/20 transition-all duration-300"
             >
               {link.label}
             </a>
@@ -49,7 +49,7 @@ export const Header: React.FC = () => {
         </nav>
 
         <div className="hidden md:flex items-center gap-4">
-          <a href="#" className="text-sm font-semibold text-stone-600 hover:text-brand-600 transition-colors">Log in</a>
+          <a href="#" className="text-sm font-semibold text-stone-600 hover:text-[#3B82F6] transition-colors">Log in</a>
           <Button size="sm">Get Started</Button>
         </div>
 

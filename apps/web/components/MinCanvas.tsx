@@ -7,7 +7,7 @@ export const MiniCanvas: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [isDrawing, setIsDrawing] = useState(false);
   const [tool, setTool] = useState<'pencil' | 'eraser'>('pencil');
-  const [color, setColor] = useState('#FDACAC'); // Default Brand Medium Pink
+  const [color, setColor] = useState('#3B82F6'); // Default Brand Medium Blue
 
   // Initialize and Handle Resize
   useEffect(() => {
@@ -116,7 +116,7 @@ export const MiniCanvas: React.FC = () => {
   };
 
   const drawGrid = (ctx: CanvasRenderingContext2D, width: number, height: number) => {
-    ctx.strokeStyle = 'rgba(253, 172, 172, 0.15)'; // Very faint pink
+    ctx.strokeStyle = 'rgba(59, 130, 246, 0.15)'; // Very faint blue
     ctx.lineWidth = 1;
     ctx.beginPath();
     for (let x = 0; x <= width; x += 24) {
@@ -133,7 +133,7 @@ export const MiniCanvas: React.FC = () => {
   const drawWelcomeScribble = (ctx: CanvasRenderingContext2D, width: number, height: number) => {
     ctx.globalCompositeOperation = 'source-over';
     ctx.beginPath();
-    ctx.strokeStyle = '#FDACAC';
+    ctx.strokeStyle = '#3B82F6';
     ctx.lineWidth = 4;
     ctx.lineCap = 'round';
     
@@ -175,9 +175,9 @@ export const MiniCanvas: React.FC = () => {
         
         <div className="flex gap-1 px-1">
           {[
-            { c: '#FDACAC', label: 'Pink' },   // Brand Medium
-            { c: '#FFCDC9', label: 'Coral' },   // Brand Light
-            { c: '#FD7979', label: 'Rose' },   // Brand Dark
+            { c: '#3B82F6', label: 'Blue' },   // Brand Medium
+            { c: '#60A5FA', label: 'Sky Blue' },   // Brand Light
+            { c: '#2563EB', label: 'Dark Blue' },   // Brand Dark
             { c: '#0f172a', label: 'Black' }   // Ink
           ].map((clr) => (
             <button

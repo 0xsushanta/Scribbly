@@ -18,16 +18,16 @@ const config: Config = {
         ink: "#0f172a",   // Slate 900
 
         brand: {
-          50: "#fff8f5",
-          100: "#FEEAC9", // Lightest - Peachy cream
-          200: "#ffe0c7",
-          300: "#FFCDC9", // Light pink/coral
-          400: "#ffbeb8",
-          500: "#FDACAC", // Medium pink
-          600: "#fd9595",
-          700: "#FD7979", // Darkest pink/coral
-          800: "#fd5c5c",
-          900: "#fd3f3f",
+          50: "#eff6ff",
+          100: "#DBEAFE", // Lightest - Light blue
+          200: "#bfdbfe",
+          300: "#93c5fd",
+          400: "#60A5FA", // Sky blue
+          500: "#3B82F6", // Blue - Primary
+          600: "#2563EB", // Dark blue
+          700: "#1d4ed8",
+          800: "#1e40af",
+          900: "#1e3a8a",
         },
 
         accent: {

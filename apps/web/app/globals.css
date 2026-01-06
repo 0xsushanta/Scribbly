@@ -11,16 +11,16 @@
   --color-paper: #f8fafc; /* Slate 50 */
   --color-ink: #0f172a; /* Slate 900 */
 
-  --color-brand-50: #fff8f5;
-  --color-brand-100: #FEEAC9; /* Lightest - Peachy cream */
-  --color-brand-200: #ffe0c7;
-  --color-brand-300: #FFCDC9; /* Light pink/coral */
-  --color-brand-400: #ffbeb8;
-  --color-brand-500: #FDACAC; /* Medium pink */
-  --color-brand-600: #fd9595;
-  --color-brand-700: #FD7979; /* Darkest pink/coral */
-  --color-brand-800: #fd5c5c;
-  --color-brand-900: #fd3f3f;
+  --color-brand-50: #eff6ff;
+  --color-brand-100: #DBEAFE; /* Lightest - Light blue */
+  --color-brand-200: #bfdbfe;
+  --color-brand-300: #93c5fd;
+  --color-brand-400: #60A5FA; /* Sky blue */
+  --color-brand-500: #3B82F6; /* Blue - Primary */
+  --color-brand-600: #2563EB; /* Dark blue */
+  --color-brand-700: #1d4ed8;
+  --color-brand-800: #1e40af;
+  --color-brand-900: #1e3a8a;
 
   --color-accent-200: #a5f3fc;
   --color-accent-400: #22d3ee;
@@ -49,11 +49,11 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(to bottom, #FDACAC, #FD7979);
+  background: linear-gradient(to bottom, #60A5FA, #3B82F6);
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(to bottom, #FD7979, #FDACAC);
+  background: linear-gradient(to bottom, #3B82F6, #2563EB);
 }
 
