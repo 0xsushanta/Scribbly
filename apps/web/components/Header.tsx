@@ -1,6 +1,7 @@
 "use client"
 import React, { useState, useEffect } from 'react';
 import { Menu, X, PenTool } from 'lucide-react';
+import Link from 'next/link';
 import { Button } from './Button';
 
 export const Header: React.FC = () => {
@@ -18,7 +19,7 @@ export const Header: React.FC = () => {
   const navLinks = [
     { label: 'Features', href: '#features' },
     { label: 'Testimonials', href: '#' },
-    { label: 'Blog', href: '#' },
+    { label: 'Pricing', href: '#pricing' },
   ];
 
   return (
@@ -28,12 +29,12 @@ export const Header: React.FC = () => {
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 flex items-center justify-between">
-        <div className="flex items-center gap-2 group cursor-pointer">
+        <Link href="/" className="flex items-center gap-2 group cursor-pointer">
           <div className="w-10 h-10 bg-gradient-to-br from-[#60A5FA] via-[#3B82F6] to-[#60A5FA] text-white rounded-xl flex items-center justify-center transform group-hover:rotate-12 transition-transform duration-300 shadow-lg shadow-[#3B82F6]/30 group-hover:shadow-xl group-hover:shadow-[#3B82F6]/40">
             <PenTool size={20} strokeWidth={2.5} />
           </div>
           <span className="text-2xl font-bold bg-gradient-to-r from-[#60A5FA] to-[#3B82F6] bg-clip-text text-transparent font-sans tracking-tight">Scribly</span>
-        </div>
+        </Link>
 
         {/* Desktop Nav */}
         <nav className="hidden md:flex items-center gap-1 bg-gradient-to-r from-[#DBEAFE]/40 via-white/50 to-[#60A5FA]/40 p-1.5 rounded-full border border-[#3B82F6]/30 backdrop-blur-sm shadow-md shadow-[#3B82F6]/10">
@@ -49,8 +50,10 @@ export const Header: React.FC = () => {
         </nav>
 
         <div className="hidden md:flex items-center gap-4">
-          <a href="#" className="text-sm font-semibold text-stone-600 hover:text-[#3B82F6] transition-colors">Log in</a>
-          <Button size="sm">Get Started</Button>
+          <Link href="/login" className="text-sm font-semibold text-stone-600 hover:text-[#3B82F6] transition-colors">Log in</Link>
+          <Link href="/signup">
+            <Button size="sm">Get Started</Button>
+          </Link>
         </div>
 
         {/* Mobile Menu Button */}
@@ -76,8 +79,12 @@ export const Header: React.FC = () => {
             </a>
           ))}
           <div className="flex flex-col gap-3 mt-4 pt-4 border-t border-stone-100">
-            <Button variant="outline" className="justify-center w-full">Log in</Button>
-            <Button className="justify-center w-full">Sign up free</Button>
+            <Link href="/login" onClick={() => setIsMobileMenuOpen(false)}>
+              <Button variant="outline" className="justify-center w-full">Log in</Button>
+            </Link>
+            <Link href="/signup" onClick={() => setIsMobileMenuOpen(false)}>
+              <Button className="justify-center w-full">Sign up free</Button>
+            </Link>
           </div>
         </div>
       )}

@@ -8,7 +8,7 @@ export const Footer: React.FC = () => {
         <div className="grid md:grid-cols-4 gap-12 mb-16">
           <div className="col-span-1 md:col-span-1">
             <div className="flex items-center gap-2 mb-6">
-              <div className="w-8 h-8 bg-gradient-to-br from-[#60A5FA] to-[#3B82F6] text-white rounded-lg flex items-center justify-center shadow-lg shadow-[#3B82F6]/30">
+              <div className="w-8 h-8 bg-linear-to-br from-[#60A5FA] to-[#3B82F6] text-white rounded-lg flex items-center justify-center shadow-lg shadow-[#3B82F6]/30">
                 <PenTool size={16} strokeWidth={2.5} />
               </div>
               <span className="text-xl font-bold bg-gradient-to-r from-[#60A5FA] to-[#3B82F6] bg-clip-text text-transparent font-sans">Scribly</span>

@@ -1,5 +1,6 @@
 import React from 'react';
 import { ArrowRight, Star, Zap } from 'lucide-react';
+import Link from 'next/link';
 import { Button } from './Button';
 import { MiniCanvas } from './MinCanvas';
 
@@ -24,7 +25,7 @@ export const Hero: React.FC = () => {
           
           <h1 className="text-5xl md:text-7xl font-bold tracking-tight text-ink font-sans leading-[1.1] animate-fade-in-up" style={{ animationDelay: '100ms' }}>
             Ideas flow better <br className="hidden md:block"/> when you <span className="relative inline-block font-hand px-2 bg-gradient-to-r from-[#60A5FA] via-[#3B82F6] to-[#60A5FA] bg-clip-text text-transparent">
-              scribble.
+              scribble
               {/* Gradient highlight underline svg */}
               <svg className="absolute w-full h-4 -bottom-1 left-0 -z-10" viewBox="0 0 100 10" preserveAspectRatio="none">
                 <defs>
@@ -44,13 +45,17 @@ export const Hero: React.FC = () => {
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start animate-fade-in-up" style={{ animationDelay: '300ms' }}>
-            <Button size="lg" className="group">
-              Start Drawing Now
-              <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
-            </Button>
-            <Button variant="secondary" size="lg">
-              Watch Demo
-            </Button>
+            <Link href="/signup">
+              <Button size="lg" className="group">
+                Start Drawing Now
+                <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
+              </Button>
+            </Link>
+            <Link href="/login">
+              <Button variant="secondary" size="lg">
+                Sign In
+              </Button>
+            </Link>
           </div>
 
           <div className="pt-4 flex items-center justify-center lg:justify-start gap-8 text-stone-500 text-sm animate-fade-in-up" style={{ animationDelay: '400ms' }}>
