@@ -23,6 +23,7 @@ export const room = async (req: Request, res:Response)=>{
         success:true,
         msg:"room created",
         name: room.slug,
+        id:room.id
     })
     } catch (error) {
         console.log(error);
