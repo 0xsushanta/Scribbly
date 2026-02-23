@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@/components/Button";
-import { API_BACKEND, TOKEN_KEY } from "@/config";
+import { TOKEN_KEY, getApiBackend } from "@/config";
 import axios from "axios";
 import { ArrowLeft, Eye, EyeOff, Lock, Mail, PenTool } from "lucide-react";
 import Link from "next/link";
@@ -28,7 +28,7 @@ export default function LoginPage() {
     setError("");
 
     try {
-      const response = await axios.post(`${API_BACKEND}/signin`, {
+      const response = await axios.post(`${getApiBackend()}/signin`, {
         email,
         password,
       });

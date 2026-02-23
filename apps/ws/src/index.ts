@@ -1,4 +1,3 @@
-import "dotenv/config";
 import WebSocket, { WebSocketServer } from "ws";
 import jwt from "jsonwebtoken";
 import { prisma } from "@repo/database";

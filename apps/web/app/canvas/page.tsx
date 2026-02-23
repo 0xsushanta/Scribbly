@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@/components/Button";
-import { API_BACKEND, TOKEN_KEY } from "@/config";
+import { TOKEN_KEY, getApiBackend } from "@/config";
 import axios from "axios";
 import { ArrowLeft, LogOut, Plus, Waypoints } from "lucide-react";
 import Link from "next/link";
@@ -35,7 +35,7 @@ export default function CanvasLobbyPage() {
       }
 
       const response = await axios.post(
-        `${API_BACKEND}/room`,
+        `${getApiBackend()}/room`,
         {
           name: roomName.trim() || `room-${Date.now()}`,
         },

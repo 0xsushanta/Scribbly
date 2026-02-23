@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@/components/Button";
-import { API_BACKEND } from "@/config";
+import { getApiBackend } from "@/config";
 import axios from "axios";
 import { ArrowLeft, Eye, EyeOff, Lock, Mail, PenTool, User } from "lucide-react";
 import Link from "next/link";
@@ -26,7 +26,7 @@ export default function SignupPage() {
     setSuccessMessage("");
 
     try {
-      await axios.post(`${API_BACKEND}/signup`, {
+      await axios.post(`${getApiBackend()}/signup`, {
         name,
         username,
         email,

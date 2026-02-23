@@ -1,4 +1,4 @@
-import { API_BACKEND } from "@/config";
+import { getApiBackend } from "@/config";
 import axios from "axios";
 
 type RectShape = {
@@ -225,7 +225,7 @@ function clearCanvas(shapes: Shape[], canvas: HTMLCanvasElement, ctx: CanvasRend
 
 async function getExistingShapes(roomId: string): Promise<Shape[]> {
   try {
-    const response = await axios.get(`${API_BACKEND}/chats/${roomId}`);
+    const response = await axios.get(`${getApiBackend()}/chats/${roomId}`);
     const messages = (response.data.messages ?? []) as Array<{ message: string }>;
 
     return messages

@@ -1,11 +1,13 @@
 import { RoomCanvas } from "@/components/RoomCanvas";
+import { use } from "react";
 
 export default function CanvasPage({
   params,
 }: {
-  params: {
+  params: Promise<{
     roomId: string;
-  };
+  }>;
 }) {
-  return <RoomCanvas roomId={params.roomId} />;
+  const { roomId } = use(params);
+  return <RoomCanvas roomId={roomId} />;
 }
