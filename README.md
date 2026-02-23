@@ -1,135 +1,120 @@
-# Turborepo starter
+# Scribly
 
-This Turborepo starter is maintained by the Turborepo core team.
+Scribly is a collaborative whiteboard app built as a Turborepo monorepo.
 
-## Using this example
+It includes:
+- `web`: Next.js frontend
+- `api`: Express REST API (auth, room creation, chat history)
+- `ws`: WebSocket server (realtime shape sync + DB persistence)
+- `packages/database`: Prisma + PostgreSQL models
+- `packages/common`: shared Zod schemas
 
-Run the following command:
+## Monorepo Structure
 
-```sh
-npx create-turbo@latest
+```text
+apps/
+  web/   # Next.js app
+  api/   # Express API
+  ws/    # WebSocket server
+packages/
+  common/
+  backend-common/
+  database/
 ```
 
-## What's inside?
+## Prerequisites
 
-This Turborepo includes the following packages/apps:
+- Node.js `>=18`
+- `pnpm@9`
+- PostgreSQL database
 
-### Apps and Packages
+## 1) Install dependencies
 
-- `docs`: a [Next.js](https://nextjs.org/) app
-- `web`: another [Next.js](https://nextjs.org/) app
-- `@repo/ui`: a stub React component library shared by both `web` and `docs` applications
-- `@repo/eslint-config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
-- `@repo/typescript-config`: `tsconfig.json`s used throughout the monorepo
-
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
-
-### Utilities
-
-This Turborepo has some additional tools already setup for you:
-
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
-
-### Build
-
-To build all apps and packages, run the following command:
-
-```
-cd my-turborepo
-
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo build
-
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo build
-yarn dlx turbo build
-pnpm exec turbo build
+```bash
+pnpm install
 ```
 
-You can build a specific package by using a [filter](https://turborepo.com/docs/crafting-your-repository/running-tasks#using-filters):
+## 2) Environment setup
 
-```
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo build --filter=docs
+Create these files:
 
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo build --filter=docs
-yarn exec turbo build --filter=docs
-pnpm exec turbo build --filter=docs
-```
+### `apps/api/.env`
 
-### Develop
-
-To develop all apps and packages, run the following command:
-
-```
-cd my-turborepo
-
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo dev
-
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo dev
-yarn exec turbo dev
-pnpm exec turbo dev
+```env
+PORT=3001
+DATABASE_URL=postgresql://USER:PASSWORD@localhost:5432/scribly
+JWT_SECRET=replace-with-a-strong-secret
+CORS_ORIGIN=http://localhost:3000
 ```
 
-You can develop a specific package by using a [filter](https://turborepo.com/docs/crafting-your-repository/running-tasks#using-filters):
+### `apps/ws/.env`
 
-```
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo dev --filter=web
-
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo dev --filter=web
-yarn exec turbo dev --filter=web
-pnpm exec turbo dev --filter=web
+```env
+WS_PORT=8080
+DATABASE_URL=postgresql://USER:PASSWORD@localhost:5432/scribly
+JWT_SECRET=replace-with-a-strong-secret
 ```
 
-### Remote Caching
+### `apps/web/.env.local`
 
-> [!TIP]
-> Vercel Remote Cache is free for all plans. Get started today at [vercel.com](https://vercel.com/signup?/signup?utm_source=remote-cache-sdk&utm_campaign=free_remote_cache).
-
-Turborepo can use a technique known as [Remote Caching](https://turborepo.com/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
-
-By default, Turborepo will cache locally. To enable Remote Caching you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup?utm_source=turborepo-examples), then enter the following commands:
-
-```
-cd my-turborepo
-
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo login
-
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo login
-yarn exec turbo login
-pnpm exec turbo login
+```env
+NEXT_PUBLIC_HTTP_BACKEND=http://localhost:3001
+NEXT_PUBLIC_WS_BACKEND=ws://localhost:8080
 ```
 
-This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
+## 3) Run Prisma migrations
 
-Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your Turborepo:
+From the repo root:
 
-```
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo link
-
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo link
-yarn exec turbo link
-pnpm exec turbo link
+```bash
+pnpm --filter @repo/database exec prisma migrate dev
+pnpm --filter @repo/database exec prisma generate
 ```
 
-## Useful Links
+## 4) Start services (3 terminals)
 
-Learn more about the power of Turborepo:
+Terminal 1:
 
-- [Tasks](https://turborepo.com/docs/crafting-your-repository/running-tasks)
-- [Caching](https://turborepo.com/docs/crafting-your-repository/caching)
-- [Remote Caching](https://turborepo.com/docs/core-concepts/remote-caching)
-- [Filtering](https://turborepo.com/docs/crafting-your-repository/running-tasks#using-filters)
-- [Configuration Options](https://turborepo.com/docs/reference/configuration)
-- [CLI Usage](https://turborepo.com/docs/reference/command-line-reference)
+```bash
+pnpm --filter api dev
+```
+
+Terminal 2:
+
+```bash
+pnpm --filter ws dev
+```
+
+Terminal 3:
+
+```bash
+pnpm --filter web dev
+```
+
+Then open [http://localhost:3000](http://localhost:3000).
+
+## 5) Basic flow to verify
+
+1. Sign up (`/signup`)
+2. Sign in (`/login`)
+3. Go to `/canvas`
+4. Create a room or join by room id
+5. Open same room in two browser tabs and draw
+6. Refresh the room and confirm shapes are loaded from DB
+
+## Useful commands
+
+```bash
+# Type-check frontend
+pnpm --filter web exec tsc --noEmit
+
+# Build API and WS
+pnpm --filter api build
+pnpm --filter ws build
+```
+
+## Notes
+
+- API base path is `/api/v1`.
+- Realtime messages are stored in `Chat.message` as JSON (shape payload).
+- Canvas currently supports rectangle and circle tools.
