@@ -45,7 +45,7 @@ export const Hero: React.FC = () => {
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start animate-fade-in-up" style={{ animationDelay: '300ms' }}>
-            <Link href="/signup">
+            <Link href="/canvas">
               <Button size="lg" className="group">
                 Start Drawing Now
                 <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />

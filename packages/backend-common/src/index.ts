@@ -1,11 +1,4 @@
-import dotenv from "dotenv";
-import path from "path";
-
-dotenv.config({
-  path: path.resolve(import.meta.dirname, "../.env"),
-});
-
-console.log(process.env.JWT_SECRET);
+import "dotenv/config";
 
 if (!process.env.JWT_SECRET) {
   throw new Error("JWT_SECRET is missing in environment variables");
