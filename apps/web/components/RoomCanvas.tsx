@@ -1,6 +1,6 @@
 "use client";
 
-import { TOKEN_KEY, WS_BACKEND } from "@/config";
+import { TOKEN_KEY, getWsBackend } from "@/config";
 import { DrawTool, initDraw } from "@/draw";
 import { Circle, LogOut, Square } from "lucide-react";
 import Link from "next/link";
@@ -30,12 +30,27 @@ export function RoomCanvas({ roomId }: { roomId: string }) {
       return;
     }
 
-    const socket = new WebSocket(`${WS_BACKEND}?token=${encodeURIComponent(token)}`);
+    const wsBackend = getWsBackend();
+    const wsUrl = (() => {
+      try {
+        const url = new URL(wsBackend);
+        url.searchParams.set("token", token);
+        return url.toString();
+      } catch {
+        const separator = wsBackend.includes("?") ? "&" : "?";
+        return `${wsBackend}${separator}token=${encodeURIComponent(token)}`;
+      }
+    })();
+
+    const socket = new WebSocket(wsUrl);
     let drawCleanup: (() => void) | null = null;
     let unmounted = false;
+    let hasConnected = false;
 
     socket.addEventListener("open", async () => {
+      hasConnected = true;
       setConnectionState("connected");
+      setError("");
       socket.send(JSON.stringify({ type: "join_room", roomId }));
 
       if (!canvasRef.current) {
@@ -55,7 +70,7 @@ export function RoomCanvas({ roomId }: { roomId: string }) {
         return;
       }
       setConnectionState("error");
-      setError("Realtime connection closed.");
+      setError(hasConnected ? "Realtime connection closed." : "Unable to connect to realtime server.");
     });
 
     return () => {

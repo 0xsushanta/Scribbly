@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@/components/Button";
-import { getApiBackend } from "@/config";
+import { TOKEN_KEY, getApiBackend } from "@/config";
 import axios from "axios";
 import { ArrowLeft, Eye, EyeOff, Lock, Mail, PenTool, User } from "lucide-react";
 import Link from "next/link";
@@ -34,6 +34,7 @@ export default function SignupPage() {
       });
 
       setSuccessMessage("Account created. Redirecting to login...");
+      window.localStorage.removeItem(TOKEN_KEY);
       setTimeout(() => {
         router.push("/login");
       }, 700);

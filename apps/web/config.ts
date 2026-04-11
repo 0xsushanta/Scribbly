@@ -8,6 +8,7 @@ const defaultWsBackend = trimTrailingSlash(
 );
 
 const LOCAL_HOSTS = new Set(["localhost", "127.0.0.1"]);
+const DEFAULT_WS_PORT = "8080";
 
 function toApiBase(httpBase: string) {
   return httpBase.endsWith("/api/v1") ? httpBase : `${httpBase}/api/v1`;
@@ -27,6 +28,17 @@ function inferLocalHttpBackendFromBrowser() {
   return `${protocol}//${hostname}:${inferredApiPort}`;
 }
 
+function inferWsBackendFromBrowser() {
+  if (typeof window === "undefined") {
+    return null;
+  }
+
+  const { protocol, hostname } = window.location;
+  const wsProtocol = protocol === "https:" ? "wss:" : "ws:";
+
+  return `${wsProtocol}//${hostname}:${DEFAULT_WS_PORT}`;
+}
+
 export function getHttpBackend() {
   if (process.env.NEXT_PUBLIC_HTTP_BACKEND) {
     return defaultHttpBackend;
@@ -40,7 +52,11 @@ export function getApiBackend() {
 }
 
 export function getWsBackend() {
-  return defaultWsBackend;
+  if (process.env.NEXT_PUBLIC_WS_BACKEND) {
+    return defaultWsBackend;
+  }
+
+  return inferWsBackendFromBrowser() ?? defaultWsBackend;
 }
 
 export const HTTP_BACKEND = defaultHttpBackend;

@@ -6,7 +6,7 @@ import axios from "axios";
 import { ArrowLeft, Eye, EyeOff, Lock, Mail, PenTool } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import React, { FormEvent, useEffect, useState } from "react";
+import React, { FormEvent, useState } from "react";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -16,11 +16,7 @@ export default function LoginPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  useEffect(() => {
-    if (window.localStorage.getItem(TOKEN_KEY)) {
-      router.replace("/canvas");
-    }
-  }, [router]);
+
 
   const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
