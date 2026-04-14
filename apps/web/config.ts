@@ -1,50 +1,81 @@
 const trimTrailingSlash = (value: string) => value.replace(/\/+$/, "");
 
-const defaultHttpBackend = trimTrailingSlash(
-  process.env.NEXT_PUBLIC_HTTP_BACKEND ?? "http://localhost:3001",
-);
-const defaultWsBackend = trimTrailingSlash(
-  process.env.NEXT_PUBLIC_WS_BACKEND ?? "ws://localhost:8080",
+const LOCAL_HTTP_FALLBACK = "http://localhost:3001";
+const LOCAL_WS_FALLBACK = "ws://localhost:8080";
+
+/**
+ * IMPORTANT: Next.js inlines NEXT_PUBLIC_ env vars via static string
+ * replacement at build time. You MUST use the literal expression
+ * `process.env.NEXT_PUBLIC_XXX` — dynamic access like
+ * `process.env[name]` will NOT be replaced and will be `undefined`
+ * in the browser.
+ */
+const RAW_HTTP_BACKEND = process.env.NEXT_PUBLIC_HTTP_BACKEND;
+const RAW_WS_BACKEND = process.env.NEXT_PUBLIC_WS_BACKEND;
+
+function resolveEnv(
+  rawValue: string | undefined,
+  envName: string,
+  localFallback: string,
+): string {
+  if (rawValue?.trim()) {
+    return rawValue.trim();
+  }
+
+  if (process.env.NODE_ENV === "production") {
+    throw new Error(`${envName} is required in production.`);
+  }
+
+  return localFallback;
+}
+
+function parseAbsoluteUrl(rawValue: string, envName: string) {
+  try {
+    return new URL(trimTrailingSlash(rawValue));
+  } catch {
+    throw new Error(`${envName} must be a valid absolute URL. Received: "${rawValue}"`);
+  }
+}
+
+function normalizeHttpBackend(rawValue: string, envName: string) {
+  const parsed = parseAbsoluteUrl(rawValue, envName);
+  if (parsed.protocol !== "http:" && parsed.protocol !== "https:") {
+    throw new Error(`${envName} must use http:// or https://`);
+  }
+  return trimTrailingSlash(parsed.toString());
+}
+
+function normalizeWsBackend(rawValue: string, envName: string) {
+  const parsed = parseAbsoluteUrl(rawValue, envName);
+  if (parsed.protocol === "https:") {
+    parsed.protocol = "wss:";
+  } else if (parsed.protocol === "http:") {
+    parsed.protocol = "ws:";
+  }
+
+  if (parsed.protocol !== "ws:" && parsed.protocol !== "wss:") {
+    throw new Error(`${envName} must use ws://, wss://, http://, or https://`);
+  }
+
+  return trimTrailingSlash(parsed.toString());
+}
+
+const defaultHttpBackend = normalizeHttpBackend(
+  resolveEnv(RAW_HTTP_BACKEND, "NEXT_PUBLIC_HTTP_BACKEND", LOCAL_HTTP_FALLBACK),
+  "NEXT_PUBLIC_HTTP_BACKEND",
 );
 
-const LOCAL_HOSTS = new Set(["localhost", "127.0.0.1"]);
-const DEFAULT_WS_PORT = "8080";
+const defaultWsBackend = normalizeWsBackend(
+  resolveEnv(RAW_WS_BACKEND, "NEXT_PUBLIC_WS_BACKEND", LOCAL_WS_FALLBACK),
+  "NEXT_PUBLIC_WS_BACKEND",
+);
 
 function toApiBase(httpBase: string) {
   return httpBase.endsWith("/api/v1") ? httpBase : `${httpBase}/api/v1`;
 }
 
-function inferLocalHttpBackendFromBrowser() {
-  if (typeof window === "undefined") {
-    return null;
-  }
-
-  const { protocol, hostname, port } = window.location;
-  if (!LOCAL_HOSTS.has(hostname)) {
-    return null;
-  }
-
-  const inferredApiPort = port === "3000" ? "3001" : port === "3001" ? "3000" : "3001";
-  return `${protocol}//${hostname}:${inferredApiPort}`;
-}
-
-function inferWsBackendFromBrowser() {
-  if (typeof window === "undefined") {
-    return null;
-  }
-
-  const { protocol, hostname } = window.location;
-  const wsProtocol = protocol === "https:" ? "wss:" : "ws:";
-
-  return `${wsProtocol}//${hostname}:${DEFAULT_WS_PORT}`;
-}
-
 export function getHttpBackend() {
-  if (process.env.NEXT_PUBLIC_HTTP_BACKEND) {
-    return defaultHttpBackend;
-  }
-
-  return inferLocalHttpBackendFromBrowser() ?? defaultHttpBackend;
+  return defaultHttpBackend;
 }
 
 export function getApiBackend() {
@@ -52,11 +83,7 @@ export function getApiBackend() {
 }
 
 export function getWsBackend() {
-  if (process.env.NEXT_PUBLIC_WS_BACKEND) {
-    return defaultWsBackend;
-  }
-
-  return inferWsBackendFromBrowser() ?? defaultWsBackend;
+  return defaultWsBackend;
 }
 
 export const HTTP_BACKEND = defaultHttpBackend;
